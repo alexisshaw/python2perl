@@ -14,7 +14,7 @@ def convertAndPrint(f):
     variables = {}
     i=0
     (t, v, _, _,_) = token[i]
-    while t != tokenize.ENDMARKER:
+    while len(token)-i > 0:
         (t, v, _, _,_) = token[i]
         line,i,understood,variables = convertToken(token,line,t,v,i,understood,variables)
         i += 1
