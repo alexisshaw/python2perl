@@ -4,10 +4,15 @@ import tokenize
 __author__ = 'Alexis Shaw'
 
 def convertString(token,line, t, v, i):
-    if re.match("^'(.*)'$", v):
-        string = re.sub(r"^'(.*)'$",'"\\1"',v)
-    elif re.match("^[r|R](['|\"])(.*)\1$", v):
-        string = re.sub("^[r|R](['|\"])(.*)\1$", "'\\1'",v)
+    if re.match('^(["|\'])(.*)\\1$', v):
+        if re.match("^'.*'$",v): v = re.sub('"',r'\"',v)
+        string = re.sub('^(["|\'])(.*)\\1$',r'"\2"',v)
+        string = re.sub('($|@|%)',r'\\1',string)
+    elif re.match("^[rR](['|\"])(.*)\\1$", v):
+        if re.match(r'^[rR]".*"$', v):
+            v = re.sub("'",r"\'",v)
+            v = re.sub(r"\"", r'"',v)
+        string = re.sub("^[rR](['|\"])(.*)\\1$", r"'\2'",v)
     else:
         string = v
 
