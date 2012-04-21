@@ -1,9 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 import keyword
-from tokenize import generate_tokens
 import tokenize
-
-__author__ = 'Alexis Shaw'
+from tokenize import generate_tokens
 
 import sys
 import os
