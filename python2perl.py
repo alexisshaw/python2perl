@@ -14,45 +14,67 @@ def convertAndPrint(f):
     """
     result = ""
     g = generate_tokens(f.readline)
+    token = []
+    for l in g:
+        token.append(l)
     line = ""
     understood = True
     printStatement = False
-    for t, v, b, _,_ in g:
+    variables = {}
+    for i, (t, v, b, _,_) in enumerate(token):
+        line += tokenize.tok_name[t] +','
         if t == tokenize.COMMENT:
             if b[0] == 1 and re.match(r'^#!',v):
                 line += '#!/usr/bin/perl -w'
-            else :
+            elif token[i + 1][0] == tokenize.NEWLINE :
+                line += ';' + v
+            else:
                 line += v
-                line += ' '
         elif t == tokenize.NAME:
             if keyword.iskeyword(v):
                 if v == 'print':
-                    line += 'say '
+                    line += 'print '
                     printStatement = True
                 else:
                     line += v + ' '
                     understood = False
             else:
                 line += '$' + v + ' '
+                variables[v] = v
         elif t == tokenize.STRING:
+            string = ""
             if re.match("^'.*'$", v):
-                line += re.sub("^'(.*)'$",'"\1"',v)
+                string = re.sub("^'(.*)'$",'"\1"',v)
             elif re.match("^[r|R](['|\"])(.*)\1$", v):
-                line += re.sub("^[r|R](['|\"])(.*)\1$", "'\1'",v)
+                string = re.sub("^[r|R](['|\"])(.*)\1$", "'\1'",v)
             else:
-                line += v
-            line += ' '
+                string = v
+            string = re.sub('('+'|'.join(variables.keys())+')', '$\1', string)
+
+            line += string + ' '
         elif t == tokenize.NEWLINE or t == tokenize.NL:
+            if t == tokenize.NEWLINE and printStatement:
+                printStatement = False
+                if not (i >= 1 and token[i-1][0] == tokenize.OP and token[i-1][1] == ','):
+                    line += r'."\n"'
+            if t == tokenize.NEWLINE and i >= 1 and token[i-1][0] != tokenize.COMMENT:
+                line += ';'
             if understood:
-                if printStatement:
-                    line += r".'\n'"
                 print line
             else:
                 print '#'+line
             understood = True
             line = ''
-        else:
+        elif t == tokenize.NUMBER:
             line += v + ' '
+        elif t == tokenize.OP and re.match(r'[=+*%-]',v):
+            line += v + ' '
+        elif t == tokenize.OP and re.match(';',v):
+            printStatement = False
+            if not (i >= 1 and token[i-1][0] == tokenize.OP and token[i-1][1] == ','):
+                line += r'."\n"'
+        else:
+            line += v + ' ' + tokenize.tok_name[t]
             understood = False
 
 
