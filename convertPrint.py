@@ -38,5 +38,6 @@ def convertPrint(token,line, t, v, i,understood,variables):
         (t, v, b, _,_) = token[i]
     if not (i >= 1 and token[i-1][0] == tokenize.OP and token[i-1][1] == ','):
             line += r'. "\n"'
-    return line, i, understood
+    return convertLineEnd.convertLineEnd(token, line,t,v,i,understood,variables)
+
 
