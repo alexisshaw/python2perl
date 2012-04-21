@@ -58,8 +58,8 @@ def convertAndPrint(f):
             elif token[i+1][0] == tokenize.STRING:
                 line += '. '
 
-        elif t == tokenize.NEWLINE or t == tokenize.NL:
-            if t == tokenize.NEWLINE and printStatement:
+        elif t == tokenize.NEWLINE or t == tokenize.ENDMARKER or t == tokenize.NL:
+            if (t == tokenize.NEWLINE or t == tokenize.ENDMARKER) and printStatement:
                 printStatement = False
                 if not (i >= 1 and token[i-1][0] == tokenize.OP and token[i-1][1] == ','):
                     line += r'. "\n"'
@@ -80,9 +80,8 @@ def convertAndPrint(f):
             if not (i >= 1 and token[i-1][0] == tokenize.OP and token[i-1][1] == ','):
                 line += r'."\n"'
         else:
-            line += v + ' ' + tokenize.tok_name[t]
+            line += v + ' '
             understood = False
-    print line,
 
 
 
