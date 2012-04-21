@@ -1,10 +1,13 @@
 import keyword
 import re
 import tokenize
+from convertFor import convertFor
+from convertIf import convertIf
 from convertLineEnd import convertLineEnd
 from convertNot import convertNot
 from convertPrint import convertPrint
 from convertString import convertString
+from convertWhile import convertWhile
 
 __author__ = 'Alexis Shaw'
 def convertToken(token, line,t,v,i,understood,variables):
@@ -28,6 +31,8 @@ def convertToken(token, line,t,v,i,understood,variables):
             elif v == 'if'   : line, i, understood, variables = convertIf(token,line,t,v,i,understood,variables)
             elif v == 'for'  : line, i, understood, variables = convertFor(token,line,t,v,i,understood,variables)
             elif v == 'while': line, i, understood, variables = convertWhile(token,line,t,v,i,understood,variables)
+            elif v == 'break': line += 'last '
+            elif v == 'continue': line += 'next'
             else:
                 line += v + ' '
                 understood = False

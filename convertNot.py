@@ -15,13 +15,13 @@ def convertNot(token,line,t,v,i,understood,variables):
         (t, v, _, _,_) = token[i]
         if t == tokenize.NAME and not keyword.iskeyword(v):
             line,i,understood,variables = convertToken.convertToken(token, line,t,v,i,understood,variables)
-        if t == tokenize.OP and re.match(r'^[=+*%,-]$|^\*\*$',v):
+        elif t == tokenize.OP and re.match(r'^[<>&^|~=+*%,-]$|^\*\*$|<<|>>|>=|<=|!=|==',v):
             line,i,understood,variables = convertToken.convertToken(token, line,t,v,i,understood,variables)
-        if t == tokenize.NL or t == tokenize.NUMBER:
+        elif t == tokenize.NL or t == tokenize.NUMBER:
             line,i,understood,variables = convertToken.convertToken(token,line,t,v,i,understood,variables)
-        if t == tokenize.STRING:
+        elif t == tokenize.STRING:
             line,i,understood,variables = convertToken.convertToken(token,line,t,v,i,understood,variables)
-        if t == tokenize.COMMENT and token[i+1][0] == tokenize.NL:
+        elif t == tokenize.COMMENT and token[i+1][0] == tokenize.NL:
             line,i,understood,variables = convertToken.convertToken(token,line,t,v,i,understood,variables)
         else:
             line += ') '
