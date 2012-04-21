@@ -30,7 +30,7 @@ def convertToken(token, line,t,v,i,understood,variables):
             variables[v] = v
 
     elif t == tokenize.STRING:
-        line,i,understood = convertString(token,line, t, v, i)
+        line,i = convertString(token,line, t, v, i)
 
     elif t == tokenize.NEWLINE or t == tokenize.ENDMARKER or t == tokenize.NL:
         line, i,understood,variables = convertLineEnd(token,line,t,v,i,understood,variables)
