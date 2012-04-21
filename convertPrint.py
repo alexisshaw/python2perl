@@ -1,4 +1,4 @@
-from convertAndPrint import convertToken
+from convertToken import convertToken
 from convertLineEnd import convertLineEnd
 
 __author__ = 'Alexis Shaw'
