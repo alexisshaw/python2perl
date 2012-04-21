@@ -22,7 +22,6 @@ def convertAndPrint(f):
     printStatement = False
     variables = {}
     for i, (t, v, b, _,_) in enumerate(token):
-        line += tokenize.tok_name[t] +','
         if t == tokenize.COMMENT:
             if b[0] == 1 and re.match(r'^#!',v):
                 line += '#!/usr/bin/perl -w'
@@ -42,21 +41,29 @@ def convertAndPrint(f):
                 line += '$' + v + ' '
                 variables[v] = v
         elif t == tokenize.STRING:
-            string = ""
-            if re.match("^'.*'$", v):
-                string = re.sub("^'(.*)'$",'"\1"',v)
+            if re.match("^'(.*)'$", v):
+                string = re.sub(r"^'(.*)'$",'"\\1"',v)
             elif re.match("^[r|R](['|\"])(.*)\1$", v):
-                string = re.sub("^[r|R](['|\"])(.*)\1$", "'\1'",v)
+                string = re.sub("^[r|R](['|\"])(.*)\1$", "'\\1'",v)
             else:
                 string = v
-            string = re.sub('('+'|'.join(variables.keys())+')', '$\1', string)
 
             line += string + ' '
+            if token[i+1][0] == tokenize.COMMENT and \
+               token[i+2][0] == tokenize.NL and \
+               token[i+3][0] == tokenize.STRING:
+                line += '. '
+            elif token[i+1][0] == tokenize.NL and\
+                token[i+2][0]  == tokenize.STRING:
+                line += '. '
+            elif token[i+1][0] == tokenize.STRING:
+                line += '. '
+
         elif t == tokenize.NEWLINE or t == tokenize.NL:
             if t == tokenize.NEWLINE and printStatement:
                 printStatement = False
                 if not (i >= 1 and token[i-1][0] == tokenize.OP and token[i-1][1] == ','):
-                    line += r'."\n"'
+                    line += r'. "\n"'
             if t == tokenize.NEWLINE and i >= 1 and token[i-1][0] != tokenize.COMMENT:
                 line += ';'
             if understood:
@@ -67,7 +74,7 @@ def convertAndPrint(f):
             line = ''
         elif t == tokenize.NUMBER:
             line += v + ' '
-        elif t == tokenize.OP and re.match(r'[=+*%-]',v):
+        elif t == tokenize.OP and re.match(r'[=+*%,-]',v):
             line += v + ' '
         elif t == tokenize.OP and re.match(';',v):
             printStatement = False
@@ -76,6 +83,7 @@ def convertAndPrint(f):
         else:
             line += v + ' ' + tokenize.tok_name[t]
             understood = False
+    print line,
 
 
 
