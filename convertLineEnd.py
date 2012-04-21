@@ -10,4 +10,6 @@ def convertLineEnd(token, line,t,v,i,understood,variables):
         line += ';'
     if not understood:
         line = '#'+line
+    print line
+    line = ''
     return line,i,understood,variables

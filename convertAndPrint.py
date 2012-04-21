@@ -1,13 +1,11 @@
 import tokenize
-from tokenize import generate_tokens
-
 from convertToken import convertToken
 
 def convertAndPrint(f):
     """
     Converts a python program file into perl program file
     """
-    g = generate_tokens(f.readline)
+    g = tokenize.generate_tokens(f.readline)
     token = []
     for l in g:
         token.append(l)
