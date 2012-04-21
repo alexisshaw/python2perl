@@ -1,6 +1,9 @@
 import re
 
 def tabsToSpaces(line):
+    """
+    Converts tabs at the beginning of a line into spaces according to python specs
+    """
     noSpacesSoFar = 0
     noSpacesToAdd = 0
     for c in line:
@@ -11,8 +14,8 @@ def tabsToSpaces(line):
             noSpacesSoFar += 8 - noSpacesSoFar%8
         else:
             break
-    spaces = ''.join(['' for i in xrange(noSpacesToAdd)])
-    re.sub("\t","")
+    spaces = ''.join(['' for _ in xrange(noSpacesToAdd)])
+    line = re.sub("\t","", line)
     return spaces + line
 
 
