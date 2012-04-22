@@ -63,5 +63,4 @@ def convertToken(token, line,t,v,i,understood,variables):
     else:
         line += v + ' '
         understood = False
-    #print tokenize.tok_name[token[i][0]], token[i][1], understood, i
     return line,i,understood,variables

@@ -10,6 +10,9 @@ def convertVariableName(token,line,t,v,i,understood,variables):
         if not (v in variables) or type != variables[v]:
             variables[v] = type
             line += 'my '
+    elif token[i-1][0] == tokenize.NAME and token[i-1][1] == 'for' and token[i+2][1] == 'range':
+        if not (v in variables) or "NONSTRINGSCALAR" != variables[v]:
+            variables[v] = "NONSTRINGSCALAR"
     if v in variables and re.match("^(STRING|NONSTRINGSCALAR)$",variables[v]):
         line += '$' + v + ' '
     elif v in variables and variables[v] == 'LIST':
@@ -62,6 +65,7 @@ def getType(token, i, understood, variables):
         else:
             return 'NONSTRINGSCALAR', understood
     else:
+        print tokenize.tok_name[token[i][0]], token[i][1], understood, i
         return 'NOTKNOWN', False
 
 
