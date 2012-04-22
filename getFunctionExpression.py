@@ -5,7 +5,6 @@ import convertToken
 __author__ = 'Alexis Shaw'
 
 def getFunctionExpression(token, line,t,v,i,understood,variables):
-    i += 1
     while len(token)-i > 0 :
         (t, v, _, _,_) = token[i]
         if t == tokenize.NAME:

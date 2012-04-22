@@ -24,5 +24,4 @@ def convertGrouping(token,line,t,v,i,understood,variables):
             break
         else: understood = False
         i += 1
-    i += 1
     return line,i,understood,variables

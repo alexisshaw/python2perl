@@ -9,4 +9,5 @@ def convertInt(token, line, t,v,i,understood, variables):
          toConvert= ''
          toConvert, i, understood,variables = getFunctionExpression(toConvert, line,t,v,i,understood,variables)
          line += '(sprintf ("%d", ' + toConvert + ') + 1 - 1)'
+         i += 1
      return line,i,understood,variables
