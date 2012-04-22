@@ -6,7 +6,7 @@ def convertLineEnd(token, line,t,v,i,understood,variables):
     """
 
     """
-    if t == tokenize.NEWLINE and i >= 1 and token[i-1][0] != tokenize.COMMENT:
+    if t == tokenize.NEWLINE and i >= 1 and token[i-1][0] != tokenize.COMMENT and token[i-1][1] != 'sys':
         line += ';'
     if not understood:
         line = '#'+line
