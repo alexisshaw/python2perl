@@ -12,7 +12,7 @@ def convertSys(token, line, t,v,i,understood, variables):
         toWrite = ''
         i+= 6
         toWrite, i, understood,variables = getFunctionExpression(token, toWrite,t,v,i,understood,variables)
-        line += 'print ( ' + toWrite + ')'
+        line += 'print( '+toWrite + ')'
         i -= 1
     elif token[i+1][0] == tokenize.OP   and token[i+1][1] == '.'      and\
          token[i+2][0] == tokenize.NAME and token[i+2][1] == 'stdin'    and\
