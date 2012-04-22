@@ -8,6 +8,7 @@ from convertFor import convertFor
 from convertGrouping import convertGrouping
 from convertIf import convertIf
 from convertInt import convertInt
+from convertLen import convertLen
 from convertLineEnd import convertLineEnd
 from convertNot import convertNot
 from convertPrint import convertPrint
@@ -44,6 +45,7 @@ def convertToken(token, line,t,v,i,understood,variables):
         elif v == 'range': line, i, understood, variables = convertRange(token, line, t,v,i,understood, variables)
         elif v == 'sys'  : line, i, understood, variables = convertSys  (token, line, t,v,i,understood, variables)
         elif v == 'int'  : line, i, understood, variables = convertInt  (token, line, t,v,i,understood, variables)
+        elif v == 'len'  : line, i, understood, variables = convertLen  (token, line, t,v,i,understood, variables)
         else: line, i, understood, variables = convertVariableName(token,line,t,v,i,understood,variables)
     elif t == tokenize.STRING: line,i = convertString(token,line, t, v, i)
     elif t == tokenize.NEWLINE: line, i,understood,variables = convertLineEnd(token,line,t,v,i,understood,variables);

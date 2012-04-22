@@ -28,7 +28,12 @@ def convertVariableName(token,line,t,v,i,understood,variables):
 
 def getType(token, i, understood, variables):
     if token[i][0] in variables:
-        return variables[token[i][0]]
+        type = variables[token[i][0]]
+        if type == 'LIST' and len(token)-i > 1 and token[i+1][1] =='[':
+            type = 'NONSTRINGSCALAR'
+        if type == 'HASH' and len(token)-i > 1 and token[i+1][1] =='[':
+            type = 'NONSTRINGSCALAR'
+        return type, understood
     elif token[i][0] == tokenize.OP and token[i][1] == '[':
         return 'LIST', understood
     elif token[i][0] == tokenize.OP and token[i][2] == '{':
