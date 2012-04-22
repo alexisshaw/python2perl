@@ -39,7 +39,6 @@ def convertToken(token, line,t,v,i,understood,variables):
             elif v == 'continue': line += 'next'
             else:
                 line += v + ' '
-                print tokenize.tok_name[t], v
                 understood = False
         elif v == 'range': line, i, understood, variables = convertRange(token, line, t,v,i,understood, variables)
         elif v == 'sys'  : line, i, understood, variables = convertSys  (token, line, t,v,i,understood, variables)
