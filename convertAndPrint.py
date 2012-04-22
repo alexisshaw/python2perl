@@ -18,6 +18,7 @@ def convertAndPrint(f):
         (t, v, _, _,_) = token[i]
         line,i,understood,variables = convertToken(token,line,t,v,i,understood,variables)
         i += 1
+    print line,
 
 
 
