@@ -37,6 +37,7 @@ def convertToken(token, line,t,v,i,understood,variables):
             elif v == 'else' : line, i, understood, variables = convertElse (token,line,t,v,i,understood,variables)
             elif v == 'break': line += 'last '
             elif v == 'continue': line += 'next'
+            elif v == 'import': line += ''
             else:
                 line += v + ' '
                 understood = False

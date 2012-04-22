@@ -31,7 +31,7 @@ def convertSys(token, line, t,v,i,understood, variables):
         line += '<STDIN>'
         i += 6
     elif token[i-1][0] == tokenize.NAME and token[i-1][1] == 'import':
-        line += 'sys'
+        line += ''
     return line,i,understood,variables
 def isReadlines(token, i):
     if token[i][0]   == tokenize.NAME and token[i][1]   == 'sys'      and\
