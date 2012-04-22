@@ -13,7 +13,9 @@ def convertPrint(token,line, t, v, i,understood,variables):
 
     i += 1
     (t, v, _, _,_) = token[i]
+    counter = 0
     while len(token)-i > 0 :
+        counter += 1
         (t, v, _, _,_) = token[i]
         if t == tokenize.NEWLINE or t == tokenize.ENDMARKER:
             break
@@ -29,8 +31,10 @@ def convertPrint(token,line, t, v, i,understood,variables):
         else:
             line, i, understood,variables = convertToken.convertToken(token,line,t,v,i,understood,variables)
         i += 1
-    if not (i >= 1 and token[i-1][0] == tokenize.OP and token[i-1][1] == ','):
-            line += r'. "\n"'
+    if not (i >= 1 and token[i-1][0] == tokenize.OP and token[i-1][1] == ',') and counter > 1:
+        line += r'. "\n"'
+    elif not (i >= 1 and token[i-1][0] == tokenize.OP and token[i-1][1] == ','):
+        line += r' "\n"'
     i -= 1
     return line, i, understood,variables
 
