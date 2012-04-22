@@ -27,9 +27,9 @@ def convertPrint(token,line, t, v, i,understood,variables):
             elif token[i+1][0] == tokenize.OP and token[i+1][1] == ';':
                 line = line
             else:
-                line, i, understood,variables = convertToken.convertToken(token,line,t,v,i,understood,variables)
+                line, i, understood,variables = convertToken.convertToken(token,line,t,v,i,understood,variables,'')
         else:
-            line, i, understood,variables = convertToken.convertToken(token,line,t,v,i,understood,variables)
+            line, i, understood,variables = convertToken.convertToken(token,line,t,v,i,understood,variables,'')
         i += 1
     if not (i >= 1 and token[i-1][0] == tokenize.OP and token[i-1][1] == ',') and counter > 1:
         line += r'. "\n"'

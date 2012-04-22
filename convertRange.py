@@ -17,13 +17,13 @@ def convertRange(token, line, t,v,i,understood, variables):
     if t == tokenize.OP and v == '(':
         maxCount = 1
         i += 1
-        number1, i, understood,variables =  getFunctionExpression(token, number1,t,v,i,understood,variables)
+        number1, i, understood,variables =  getFunctionExpression(token, number1,t,v,i,understood,variables, '')
         if token[i-1][1] == ',':
             maxCount = 2
-            number2, i, understood,variables =  getFunctionExpression(token, number2,t,v,i,understood,variables)
+            number2, i, understood,variables =  getFunctionExpression(token, number2,t,v,i,understood,variables, '')
         if token[i-1][1] == ',':
             maxCount = 3
-            number3, i, understood,variables =  getFunctionExpression(token, number3,t,v,i,understood,variables)
+            number3, i, understood,variables =  getFunctionExpression(token, number3,t,v,i,understood,variables, '')
     if maxCount == 1:
         line += '(0 .. '+ number1 + '+ 1 ) '
         i -= 1

@@ -19,7 +19,7 @@ from convertVariableName import convertVariableName, getType
 from convertWhile import convertWhile
 
 __author__ = 'Alexis Shaw'
-def convertToken(token, line,t,v,i,understood,variables):
+def convertToken(token, line,t,v,i,understood,variables, oldIdent):
     """
     Converts a token in Python into an equivelent Perl string
     """
@@ -30,11 +30,11 @@ def convertToken(token, line,t,v,i,understood,variables):
             elif v == 'not'  : line, i, understood, variables = convertNot  (token,line,t,v,i,understood,variables)
             elif v == 'and'  : line += '&& '
             elif v == 'or'   : line += '|| '
-            elif v == 'if'   : line, i, understood, variables = convertIf   (token,line,t,v,i,understood,variables)
-            elif v == 'for'  : line, i, understood, variables = convertFor  (token,line,t,v,i,understood,variables)
-            elif v == 'while': line, i, understood, variables = convertWhile(token,line,t,v,i,understood,variables)
-            elif v == 'elif' : line, i, understood, variables = convertElif (token,line,t,v,i,understood,variables)
-            elif v == 'else' : line, i, understood, variables = convertElse (token,line,t,v,i,understood,variables)
+            elif v == 'if'   : line, i, understood, variables = convertIf   (token,line,t,v,i,understood,variables, oldIdent)
+            elif v == 'for'  : line, i, understood, variables = convertFor  (token,line,t,v,i,understood,variables, oldIdent)
+            elif v == 'while': line, i, understood, variables = convertWhile(token,line,t,v,i,understood,variables, oldIdent)
+            elif v == 'elif' : line, i, understood, variables = convertElif (token,line,t,v,i,understood,variables, oldIdent)
+            elif v == 'else' : line, i, understood, variables = convertElse (token,line,t,v,i,understood,variables, oldIdent)
             elif v == 'break': line += 'last '
             elif v == 'continue': line += 'next'
             elif v == 'import': line += ''
@@ -42,7 +42,7 @@ def convertToken(token, line,t,v,i,understood,variables):
                 line += v + ' '
                 understood = False
         elif v == 'range': line, i, understood, variables = convertRange(token, line, t,v,i,understood, variables)
-        elif v == 'sys'  : line, i, understood, variables = convertSys  (token, line, t,v,i,understood, variables)
+        elif v == 'sys'  : line, i, understood, variables = convertSys  (token, line, t,v,i,understood, variables, oldIdent)
         elif v == 'int'  : line, i, understood, variables = convertInt  (token, line, t,v,i,understood, variables)
         elif v == 'len'  : line, i, understood, variables = convertLen  (token, line, t,v,i,understood, variables)
         else: line, i, understood, variables = convertVariableName(token,line,t,v,i,understood,variables)
@@ -63,4 +63,5 @@ def convertToken(token, line,t,v,i,understood,variables):
     else:
         line += v + ' '
         understood = False
+    #line += tokenize.tok_name[t]
     return line,i,understood,variables

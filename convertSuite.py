@@ -4,7 +4,7 @@ import convertToken
 
 __author__ = 'Alexis Shaw'
 
-def convertSuite(token,t,v,i,understood,variables):
+def convertSuite(token,t,v,i,understood,variables, oldIdent):
     endOfLine = ""
     singleLine = True
     if t == tokenize.COMMENT:
@@ -15,20 +15,20 @@ def convertSuite(token,t,v,i,understood,variables):
         singleLine = False
         i += 1
     body = ''
-    indentValue = ''
+    indentValue = oldIdent
     noSimpleStatements = 1
     while len(token)-i > 0 :
         (t, v, _, _,_) = token[i]
         if t == tokenize.NAME:
-            body,i,understood,variables = convertToken.convertToken(token, body,t,v,i,understood,variables)
+            body,i,understood,variables = convertToken.convertToken(token, body,t,v,i,understood,variables, indentValue)
         elif t == tokenize.OP and re.match(r'^[()<>&^|~=+*%,/-]$|^\*\*$|<<|>>|>=|<=|!=|==|\+=|-=|\*=|%=|&=',v):
-            body,i,understood,variables = convertToken.convertToken(token, body,t,v,i,understood,variables)
+            body,i,understood,variables = convertToken.convertToken(token, body,t,v,i,understood,variables, indentValue)
         elif t == tokenize.NUMBER:
-            body,i,understood,variables = convertToken.convertToken(token, body,t,v,i,understood,variables)
+            body,i,understood,variables = convertToken.convertToken(token, body,t,v,i,understood,variables, indentValue)
         elif t == tokenize.STRING:
-            body,i,understood,variables = convertToken.convertToken(token, body,t,v,i,understood,variables)
+            body,i,understood,variables = convertToken.convertToken(token, body,t,v,i,understood,variables, indentValue)
         elif t == tokenize.COMMENT and token[i+1][0] == tokenize.NL:
-            temp,i,understood,variables = convertToken.convertToken(token, "",t,v,i,understood,variables)
+            temp,i,understood,variables = convertToken.convertToken(token, "",t,v,i,understood,variables, indentValue)
             if singleLine:
                 endOfLine += temp
             else:
@@ -49,6 +49,7 @@ def convertSuite(token,t,v,i,understood,variables):
             body += indentValue
         elif t == tokenize.DEDENT:
             if not singleLine:
+                body += v
                 break
         elif t == tokenize.OP and v == ';':
             body += v + ' '

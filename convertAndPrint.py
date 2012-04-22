@@ -16,7 +16,7 @@ def convertAndPrint(f):
     (t, v, _, _,_) = token[i]
     while len(token)-i > 0:
         (t, v, _, _,_) = token[i]
-        line,i,understood,variables = convertToken(token,line,t,v,i,understood,variables)
+        line,i,understood,variables = convertToken(token,line,t,v,i,understood,variables, '')
         i += 1
     print line,
 
