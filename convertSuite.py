@@ -11,7 +11,7 @@ def convertSuite(token,t,v,i,understood,variables):
         endOfLine += v
         i += 1
         (t, v, _, _,_) = token[i]
-    if t == tokenize.NEWLINE:
+    if t == tokenize.NEWLINE or t == tokenize.NL:
         singleLine = False
         i += 1
     body = ''

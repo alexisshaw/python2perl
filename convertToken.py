@@ -23,7 +23,6 @@ def convertToken(token, line,t,v,i,understood,variables):
     """
     Converts a token in Python into an equivelent Perl string
     """
-    #print tokenize.tok_name[t], v
     if t == tokenize.COMMENT: line,i,understood,variables = convertComment(token,line,t,v,i,understood,variables)
     elif t == tokenize.NAME:
         if keyword.iskeyword(v):

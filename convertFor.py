@@ -46,6 +46,7 @@ def convertFor(token,line,t,v,i,understood,variables):
             break
         else: understood = False
         i += 1
+    i += 1
     (t, v, _, _,_) = token[i]
     body, i,understood,variables, singleLine, noSimpleStatements, comment = convertSuite(token,t,v,i,understood,variables)
 

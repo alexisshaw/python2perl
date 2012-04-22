@@ -28,7 +28,7 @@ def convertRange(token, line, t,v,i,understood, variables):
         line += '(0 .. '+ number1 + '+ 1 ) '
         i -= 1
     elif maxCount == 2:
-        line += '(' + number1 + '.. ' + number2 + '+ 1 )'
+        line += '(' + number1 + '.. ' + number2 + '- 1 )'
         i -= 1
     else:
         understood = False
