@@ -34,7 +34,7 @@ def convertFor(token,line,t,v,i,understood,variables):
         (t, v, _, _,_) = token[i]
         if t == tokenize.NAME:
             source,i,understood,variables = convertToken.convertToken(token, source,t,v,i,understood,variables)
-        elif t == tokenize.OP and re.match(r'^[<>&^|~=+*%,-]$|^\*\*$|<<|>>|>=|<=|!=|==',v):
+        elif t == tokenize.OP and re.match(r'^[()<>&^|~=+*%,-]$|^\*\*$|<<|>>|>=|<=|!=|==',v):
             source,i,understood,variables = convertToken.convertToken(token, source,t,v,i,understood,variables)
         elif t == tokenize.NL or t == tokenize.NUMBER:
             source,i,understood,variables = convertToken.convertToken(token,source,t,v,i,understood,variables)
@@ -42,7 +42,7 @@ def convertFor(token,line,t,v,i,understood,variables):
             source,i,understood,variables = convertToken.convertToken(token,source,t,v,i,understood,variables)
         elif t == tokenize.COMMENT and token[i+1][0] == tokenize.NL:
             source,i,understood,variables = convertToken.convertToken(token,source,t,v,i,understood,variables)
-        elif t == token.OP and v == ":":
+        elif t == tokenize.OP and v == ":":
             break
         else: understood = False
         i += 1
@@ -53,7 +53,7 @@ def convertFor(token,line,t,v,i,understood,variables):
     if singleLine:
         line += 'foreach ' + target + ' (' + source +'){' + body + '}' + comment + '\n'
     else:
-        line += 'foreach ' + target + ' (' + source +'){\n' + body + '}'
+        line += 'foreach ' + target + ' (' + source +'){\n' + body + '\n}\n'
 
     return line, i, understood, variables
 

@@ -12,4 +12,5 @@ def convertLineEnd(token, line,t,v,i,understood,variables):
         line = '#'+line
     print line
     line = ''
+    understood = True
     return line,i,understood,variables

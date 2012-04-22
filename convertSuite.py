@@ -13,17 +13,17 @@ def convertSuite(token,t,v,i,understood,variables):
         (t, v, _, _,_) = token[i]
     if t == tokenize.NEWLINE:
         singleLine = False
+        i += 1
     body = ''
     indentValue = ''
     noSimpleStatements = 1
-    i += 1
     while len(token)-i > 0 :
         (t, v, _, _,_) = token[i]
         if t == tokenize.NAME:
             body,i,understood,variables = convertToken.convertToken(token, body,t,v,i,understood,variables)
-        elif t == tokenize.OP and re.match(r'^[<>&^|~=+*%,-]$|^\*\*$|<<|>>|>=|<=|!=|==',v):
+        elif t == tokenize.OP and re.match(r'^[()<>&^|~=+*%,-]$|^\*\*$|<<|>>|>=|<=|!=|==|\+=|-=|\*=|%=|&=',v):
             body,i,understood,variables = convertToken.convertToken(token, body,t,v,i,understood,variables)
-        elif t == tokenize.NL or t == tokenize.NUMBER:
+        elif t == tokenize.NUMBER:
             body,i,understood,variables = convertToken.convertToken(token, body,t,v,i,understood,variables)
         elif t == tokenize.STRING:
             body,i,understood,variables = convertToken.convertToken(token, body,t,v,i,understood,variables)
@@ -33,11 +33,17 @@ def convertSuite(token,t,v,i,understood,variables):
                 endOfLine += temp
             else:
                 body += temp
-        elif t == tokenize.NEWLINE:
+        elif t == tokenize.NEWLINE or t == tokenize.ENDMARKER or t == tokenize.NL:
             if singleLine:
                 break
-            body,i,understood,variables = convertToken.convertToken(token, body,t,v,i,understood,variables)
-            body += indentValue
+            else:
+                if t == tokenize.NEWLINE and i >= 1 and token[i-1][0] != tokenize.COMMENT:
+                    body += ';'
+                if not understood:
+                    body = '#'+body
+                if t == tokenize.NEWLINE and i >= 1 and token[i+1][0] != tokenize.DEDENT:
+                    body += '\n'
+                    body += indentValue
         elif t == tokenize.INDENT:
             indentValue = v
             body += indentValue

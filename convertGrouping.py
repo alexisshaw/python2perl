@@ -1,21 +1,17 @@
-import keyword
 import re
 import tokenize
 import convertToken
 
 __author__ = 'Alexis Shaw'
 
-def convertNot(token,line,t,v,i,understood,variables):
-    """
-
-    """
-    line += '!('
+def convertGrouping(token,line,t,v,i,understood,variables):
+    line += '( '
     i += 1
     while len(token)-i > 0 :
         (t, v, _, _,_) = token[i]
-        if t == tokenize.NAME and not keyword.iskeyword(v):
+        if t == tokenize.NAME:
             line,i,understood,variables = convertToken.convertToken(token, line,t,v,i,understood,variables)
-        elif t == tokenize.OP and re.match(r'^[()<>&^|~=+*%,-]$|^\*\*$|<<|>>|>=|<=|!=|==|\+=|-=|\*=|%=|&=',v):
+        elif t == tokenize.OP and re.match(r'^[(<>&^|~=+*%-]$|^\*\*$|<<|>>|>=|<=|!=|==',v):
             line,i,understood,variables = convertToken.convertToken(token, line,t,v,i,understood,variables)
         elif t == tokenize.NL or t == tokenize.NUMBER:
             line,i,understood,variables = convertToken.convertToken(token,line,t,v,i,understood,variables)
@@ -23,7 +19,10 @@ def convertNot(token,line,t,v,i,understood,variables):
             line,i,understood,variables = convertToken.convertToken(token,line,t,v,i,understood,variables)
         elif t == tokenize.COMMENT and token[i+1][0] == tokenize.NL:
             line,i,understood,variables = convertToken.convertToken(token,line,t,v,i,understood,variables)
-        else:
-            line += ') '
-            return convertToken.convertToken(token,line,t,v,i,understood,variables)
+        elif t == tokenize.OP and re.match('[)]', v):
+            line += v + ' '
+            break
+        else: understood = False
         i += 1
+    i += 1
+    return line,i,understood,variables

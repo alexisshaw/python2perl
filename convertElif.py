@@ -5,7 +5,7 @@ import convertToken
 
 __author__ = 'Alexis Shaw'
 
-def convertWhile(token,line,t,v,i,understood,variables):
+def convertElif(token,line,t,v,i,understood,variables):
     """
 
     """
@@ -29,15 +29,9 @@ def convertWhile(token,line,t,v,i,understood,variables):
     i += 1
     (t, v, _, _,_) = token[i]
     body, i,understood,variables, singleLine, noSimpleStatements, comment = convertSuite(token,t,v,i,understood,variables)
-
-    if singleLine and noSimpleStatements <= 1:
-        line += body + ' ' + 'while ' + condition + ';' + comment + '\n'
-    elif singleLine:
-        line += 'while (' + condition + ') {' + body + '}' + comment + '\n'
+    if singleLine:
+        line += 'elsif (' + condition + ') {' + body + '}' + comment + '\n'
     else:
-        line += 'while (' + condition + ') {\n' + body + '\n}\n'
+        line += 'elsif (' + condition + ') {\n' + body + '\n}\n'
 
     return line, i, understood, variables
-
-
-

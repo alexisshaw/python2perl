@@ -7,7 +7,7 @@ def convertString(token,line, t, v, i):
     if re.match('^(["|\'])(.*)\\1$', v):
         if re.match("^'.*'$",v): v = re.sub('"',r'\"',v)
         string = re.sub('^(["|\'])(.*)\\1$',r'"\2"',v)
-        string = re.sub('($|@|%)',r'\\1',string)
+        string = re.sub('(\$|@|%)',r'\\\1',string)
     elif re.match("^[rR](['|\"])(.*)\\1$", v):
         if re.match(r'^[rR]".*"$', v):
             v = re.sub("'",r"\'",v)
