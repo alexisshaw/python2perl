@@ -20,7 +20,7 @@ def convertVariableName(token,line,t,v,i,understood,variables):
             line, i, understood, variables = convertSprintf(token,line,t,v,i,understood,variables)
         else:
             line += '$' + v + ' '
-    if v in variables and variables[v] == 'NONSTRINGSCALAR':
+    elif v in variables and variables[v] == 'NONSTRINGSCALAR':
         line += '$' + v + ' '
     elif v in variables and variables[v] == 'LIST':
         if token[i+1][0] == tokenize.OP and token[i+1][1] == '[':
@@ -29,12 +29,12 @@ def convertVariableName(token,line,t,v,i,understood,variables):
              token[i+2][0] == tokenize.NAME and token[i+2][1] == 'append'and\
              token[i+3][0] == tokenize.OP and token[i+3][1] == '(':
             toAppend, i, understood, variables = convertGrouping(token,line,t,v,i+3,understood,variables)
-            line += 'push('+v+','+ toAppend + ') '
+            line += 'push(@'+v+','+ toAppend + ') '
         elif token[i+1][0] == tokenize.OP and token[i+1][1]   == '.' and\
              token[i+2][0] == tokenize.NAME and token[i+2][1] == 'pop'and\
              token[i+3][0] == tokenize.OP and token[i+3][1] == '(' and\
              token[i+4][0] == tokenize.OP and token[i+4][1] == ')':
-             line += 'pop(' + v + ') '
+             line += 'pop(@' + v + ') '
              i += 4
         else:
             line += '@' + v + ' '

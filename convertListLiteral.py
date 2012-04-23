@@ -11,7 +11,7 @@ def convertListLiteral(token,line,t,v,i,understood,variables):
         (t, v, _, _,_) = token[i]
         if t == tokenize.NAME:
             line,i,understood,variables = convertToken.convertToken(token, line,t,v,i,understood,variables,'')
-        elif t == tokenize.OP and re.match(r'^[([\]<>&^|~=+,*%-]$|^\*\*$|<<|>>|>=|<=|!=|==',v):
+        elif t == tokenize.OP and re.match(r'^[([<>&^|~=+,*%-]$|^\*\*$|<<|>>|>=|<=|!=|==',v):
             line,i,understood,variables = convertToken.convertToken(token, line,t,v,i,understood,variables,'')
         elif t == tokenize.NL or t == tokenize.NUMBER:
             line,i,understood,variables = convertToken.convertToken(token,line,t,v,i,understood,variables,'')

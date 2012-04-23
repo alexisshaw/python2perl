@@ -8,11 +8,13 @@ def convertSliceOperator(token,line,t,v,i,understood,variables):
     sliceOperators = []
     count = 0
 
+    i+=1
+    sliceOperators.append('')
     while len(token)-i > 0 :
         (t, v, _, _,_) = token[i]
         if t == tokenize.NAME:
             sliceOperators[count],i,understood,variables = convertToken.convertToken(token, sliceOperators[count],t,v,i,understood,variables,'')
-        elif t == tokenize.OP and re.match(r'^[([\]<>&^|~=+,*%-]$|^\*\*$|<<|>>|>=|<=|!=|==',v):
+        elif t == tokenize.OP and re.match(r'^[([<>&^|~=+,*%-]$|^\*\*$|<<|>>|>=|<=|!=|==',v):
             sliceOperators[count],i,understood,variables = convertToken.convertToken(token, sliceOperators[count],t,v,i,understood,variables,'')
         elif t == tokenize.NL or t == tokenize.NUMBER:
             sliceOperators[count],i,understood,variables = convertToken.convertToken(token,sliceOperators[count],t,v,i,understood,variables,'')
@@ -23,6 +25,7 @@ def convertSliceOperator(token,line,t,v,i,understood,variables):
         elif t == tokenize.OP and v == ']':
             break
         elif t == tokenize.OP and v == ':':
+            sliceOperators.append('')
             count+= 1
         else: understood = False
         i += 1

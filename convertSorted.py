@@ -9,7 +9,7 @@ def convertSorted(token, line, t,v,i,understood, variables):
     i+= 1
     t,v,_,_,_ = token[i]
     temp, i, understood, variables = convertGrouping(token,'',t,v,i,understood,variables)
-    if type == 'LIST':
+    if type[0] == 'LIST':
         line += 'sort ' + temp
     else:
         line += 'sort ' + temp
