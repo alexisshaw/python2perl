@@ -1,12 +1,12 @@
 import re
 import tokenize
-from convertSprintf import convertSprintf
+import convertSprintf
 
 __author__ = 'Alexis Shaw'
 
 def convertString(token,line, t, v, i, understood, variables):
     if len(token) - i > 1 and token[i+1][0] == tokenize.OP and token[i+1][1] == '%':
-        return convertSprintf(token,line,t,v,i,understood,variables)
+        return convertSprintf.convertSprintf(token,line,t,v,i,understood,variables)
     else:
         return getString(token,line,t,v,i,understood,variables)
 

@@ -49,7 +49,7 @@ def convertToken(token, line,t,v,i,understood,variables, oldIdent):
         elif v == 'len'  : line, i, understood, variables = convertLen   (token, line, t,v,i,understood, variables)
         elif v =='sorted': line, i, understood, variables = convertSorted(token, line, t,v,i,understood, variables)
         else: line, i, understood, variables = convertVariableName(token,line,t,v,i,understood,variables)
-    elif t == tokenize.STRING: line,i = convertString(token,line, t, v, i,understood,variables)
+    elif t == tokenize.STRING: line,i,understood,variables = convertString(token,line, t, v, i,understood,variables)
     elif t == tokenize.NEWLINE: line, i,understood,variables = convertLineEnd(token,line,t,v,i,understood,variables);
     elif t == tokenize.NL: line, i,understood,variables = convertLineEnd(token,line,t,v,i,understood,variables);
     elif t == tokenize.NUMBER:line += v + ' '
