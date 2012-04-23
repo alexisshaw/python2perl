@@ -53,7 +53,7 @@ def convertToken(token, line,t,v,i,understood,variables, oldIdent):
     elif t == tokenize.NEWLINE: line, i,understood,variables = convertLineEnd(token,line,t,v,i,understood,variables);
     elif t == tokenize.NL: line, i,understood,variables = convertLineEnd(token,line,t,v,i,understood,variables);
     elif t == tokenize.NUMBER:line += v + ' '
-    elif t == tokenize.OP and re.match(r'^[<>&^|~=*,/-]$|^\*\*$|<<|>>|>=|<=|!=|==|\+=|-=|\*=|%=|&=',v): line += v + ' '
+    elif t == tokenize.OP and re.match(r'^[<>&^|~=*,/%-]$|^\*\*$|<<|>>|>=|<=|!=|==|\+=|-=|\*=|%=|&=',v): line += v + ' '
     elif t == tokenize.OP and v == '+' and len(token) - i > 1 and\
          (((token[i+1][1] in variables) and variables[token[i+1][1]] == 'STRING') or
           token[i-1][0] == tokenize.STRING or
