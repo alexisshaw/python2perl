@@ -17,7 +17,7 @@ def convertFor(token,line,t,v,i,understood,variables, oldIdent):
             if v == 'in':
                 break
             target,i,understood,variables = convertToken.convertToken(token, target,t,v,i,understood,variables, '')
-        elif t == tokenize.OP and re.match(r'^[<>&^|~=+*%,/-]$|^\*\*$|<<|>>|>=|<=|!=|==',v):
+        elif t == tokenize.OP and re.match(r'^[()[\]<>&^|~=+*%[,/-]$|^\*\*$|<<|>>|>=|<=|!=|==',v):
             target,i,understood,variables = convertToken.convertToken(token, target,t,v,i,understood,variables, '')
         elif t == tokenize.NL or t == tokenize.NUMBER:
             target,i,understood,variables = convertToken.convertToken(token,target,t,v,i,understood,variables, '')
@@ -34,7 +34,7 @@ def convertFor(token,line,t,v,i,understood,variables, oldIdent):
         (t, v, _, _,_) = token[i]
         if t == tokenize.NAME:
             source,i,understood,variables = convertToken.convertToken(token, source,t,v,i,understood,variables, "")
-        elif t == tokenize.OP and re.match(r'^[()<>&^|~=+*%,/-]$|^\*\*$|<<|>>|>=|<=|!=|==',v):
+        elif t == tokenize.OP and re.match(r'^[()[\]<>&^|~=+*%,/-]$|^\*\*$|<<|>>|>=|<=|!=|==',v):
             source,i,understood,variables = convertToken.convertToken(token, source,t,v,i,understood,variables, '')
         elif t == tokenize.NL or t == tokenize.NUMBER:
             source,i,understood,variables = convertToken.convertToken(token,source,t,v,i,understood,variables, '')

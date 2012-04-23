@@ -21,7 +21,7 @@ def convertSuite(token,t,v,i,understood,variables, oldIdent):
         (t, v, _, _,_) = token[i]
         if t == tokenize.NAME:
             body,i,understood,variables = convertToken.convertToken(token, body,t,v,i,understood,variables, indentValue)
-        elif t == tokenize.OP and re.match(r'^[()<>&^|~=+*%,/-]$|^\*\*$|<<|>>|>=|<=|!=|==|\+=|-=|\*=|%=|&=',v):
+        elif t == tokenize.OP and re.match(r'^[()<>&^|~=+*[]%,/-]$|^\*\*$|<<|>>|>=|<=|!=|==|\+=|-=|\*=|%=|&=',v):
             body,i,understood,variables = convertToken.convertToken(token, body,t,v,i,understood,variables, indentValue)
         elif t == tokenize.NUMBER:
             body,i,understood,variables = convertToken.convertToken(token, body,t,v,i,understood,variables, indentValue)

@@ -11,7 +11,7 @@ def convertGrouping(token,line,t,v,i,understood,variables):
         (t, v, _, _,_) = token[i]
         if t == tokenize.NAME:
             line,i,understood,variables = convertToken.convertToken(token, line,t,v,i,understood,variables,'')
-        elif t == tokenize.OP and re.match(r'^[(<>&^|~=+*%-]$|^\*\*$|<<|>>|>=|<=|!=|==',v):
+        elif t == tokenize.OP and re.match(r'^[([\]<>&^|~=+,*%-]$|^\*\*$|<<|>>|>=|<=|!=|==',v):
             line,i,understood,variables = convertToken.convertToken(token, line,t,v,i,understood,variables,'')
         elif t == tokenize.NL or t == tokenize.NUMBER:
             line,i,understood,variables = convertToken.convertToken(token,line,t,v,i,understood,variables,'')
@@ -24,4 +24,5 @@ def convertGrouping(token,line,t,v,i,understood,variables):
             break
         else: understood = False
         i += 1
+        #line += tokenize.tok_name[t]
     return line,i,understood,variables
